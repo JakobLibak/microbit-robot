@@ -1,4 +1,3 @@
-let duty = 0
 let _: neopixel.Strip = null
 let _h_arm: neopixel.Strip = null
 let _til_arm: neopixel.Strip = null
@@ -27,12 +26,13 @@ _h_arm = strip.range(28, 7)
 trekant = strip.range(35, 13)
 _ = strip.range(48, 1)
 
-duty = 0
 radio.setGroup(1)
 
 function AktiverLys(LysProgram : number) {
     if(LysProgram == 0) {
-        Øjne.showColor(neopixel.colors(NeoPixelColors.Red))
+        strip.clear() // Sluk alle lys
+        strip.show()
+        Øjne.showColor(neopixel.colors(NeoPixelColors.Red)) // Lys rødt i øjne
         strip.show()
         basic.pause(500)
         Øjne.clear()
@@ -114,18 +114,17 @@ function SpilMusik(musiknummer : number) {
 
 function StartMotor(hastighed : number) {
     pins.analogWritePin(AnalogPin.P1, hastighed)
-    basic.pause(10)
 }
 
 radio.onReceivedValue(function (robotfunktion, værdi) {
     if (robotfunktion == "musik") {
-        SpilMusik(værdi)
+        control.inBackground(function () {SpilMusik(værdi)})
     }
     else if (robotfunktion == "lys") {
-        AktiverLys(værdi)
+        control.inBackground(function () {AktiverLys(værdi)})
     }
     else if (robotfunktion == "motor") {
-        StartMotor(værdi)
+        control.inBackground(function () {StartMotor(værdi)})
     }
 }
 )
