@@ -8,7 +8,6 @@ input.onButtonPressed(Button.AB, function () {
         radio.sendValue("motor", program)
         }
     else {radio.sendValue("motor", y_akse)}
-    radio.sendValue("motor", y_akse)
     basic.pause(10)
     radio.sendValue("lys", program)
     basic.pause(10)
