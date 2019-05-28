@@ -28,8 +28,8 @@ _ = strip.range(48, 1)
 
 radio.setGroup(1)
 
-function AktiverLys(LysProgram : number) {
-    if(LysProgram == 0) {
+function AktiverLys(LysProgram: number) {
+    if (LysProgram == 0) {
         strip.clear() // Sluk alle lys
         strip.show()
         Øjne.showColor(neopixel.colors(NeoPixelColors.Red)) // Lys rødt i øjne
@@ -38,7 +38,7 @@ function AktiverLys(LysProgram : number) {
         Øjne.clear()
         strip.show()
     }
-    if(LysProgram == 1) {
+    if (LysProgram == 1) {
         Øjne.showColor(neopixel.colors(NeoPixelColors.Red))
         mave_top.showColor(neopixel.colors(NeoPixelColors.Orange))
         h_arm.showColor(neopixel.colors(NeoPixelColors.Green))
@@ -48,7 +48,7 @@ function AktiverLys(LysProgram : number) {
         Næse.showColor(neopixel.colors(NeoPixelColors.Yellow))
         strip.show()
     }
-    if(LysProgram == 2) {
+    if (LysProgram == 2) {
         Øjne.clear()
         basic.pause(200)
         Øjne.show()
@@ -59,7 +59,7 @@ function AktiverLys(LysProgram : number) {
         Mund.setPixelColor(3, neopixel.colors(NeoPixelColors.Red))
         strip.show()
     }
-    if(LysProgram == 3) {
+    if (LysProgram == 3) {
         strip.showRainbow(1, 360)
         for (let i = 0; i < strip.length(); i++) {
             strip.shift(1)
@@ -67,9 +67,9 @@ function AktiverLys(LysProgram : number) {
             basic.pause(100)
         }
     }
-}    
+}
 
-function SpilMusik(musiknummer : number) {
+function SpilMusik(musiknummer: number) {
     if (musiknummer == 0) {
         // Spil test-toner - starten af Mester Jakob
         music.playTone(262, music.beat(BeatFraction.Whole))
@@ -78,7 +78,7 @@ function SpilMusik(musiknummer : number) {
         music.playTone(262, music.beat(BeatFraction.Whole))
     }
     if (musiknummer == 1) {
-            // Spil "Mester Jakob"
+        // Spil "Mester Jakob"
         for (let i = 0; i < 2; i++) {
             music.playTone(262, music.beat(BeatFraction.Whole))
             music.playTone(294, music.beat(BeatFraction.Whole))
@@ -110,30 +110,45 @@ function SpilMusik(musiknummer : number) {
         //Spil et andet nummer
         music.playTone(262, music.beat(BeatFraction.Whole))
     }
+    else if (musiknummer == 3) {
+        music.beginMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+    }
+    else if (musiknummer == 4) {
+        music.beginMelody(music.builtInMelody(Melodies.Nyan), MelodyOptions.Once)
+    }
+    else if (musiknummer == 5) {
+        music.beginMelody(music.builtInMelody(Melodies.Chase), MelodyOptions.Once)
+    }
+    else if (musiknummer == 6) {
+        music.beginMelody(music.builtInMelody(Melodies.Blues), MelodyOptions.Once)
+    }
+    else if (musiknummer == 7) {
+        music.beginMelody(music.builtInMelody(Melodies.JumpDown), MelodyOptions.Once)
+    }
 }
 
-function StartMotor(hastighed : number) {
+function StartMotor(hastighed: number) {
     pins.analogWritePin(AnalogPin.P1, hastighed)
 }
 
 radio.onReceivedValue(function (robotfunktion, værdi) {
     if (robotfunktion == "musik") {
-        control.inBackground(function () {SpilMusik(værdi)})
+        control.inBackground(function () { SpilMusik(værdi) })
     }
     else if (robotfunktion == "lys") {
-        control.inBackground(function () {AktiverLys(værdi)})
+        control.inBackground(function () { AktiverLys(værdi) })
     }
     else if (robotfunktion == "motor") {
-        control.inBackground(function () {StartMotor(værdi)})
+        control.inBackground(function () { StartMotor(værdi) })
     }
 }
 )
 
 
 input.onButtonPressed(Button.A, function () {
-    control.inBackground(function () {SpilMusik(0)})
-    control.inBackground(function () {AktiverLys(0)})
-    control.inBackground(function () {StartMotor(1000)})
+    control.inBackground(function () { SpilMusik(0) })
+    control.inBackground(function () { AktiverLys(0) })
+    control.inBackground(function () { StartMotor(1000) })
     basic.pause(1000)
-    control.inBackground(function () {StartMotor(0)})
+    control.inBackground(function () { StartMotor(0) })
 })
