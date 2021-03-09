@@ -1,0 +1,1 @@
+Du er velkommen til at lave en pull request, hvis du har brugt noget god kode til micro:bit sammen med bit:bot.
